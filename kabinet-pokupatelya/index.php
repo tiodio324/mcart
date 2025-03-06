@@ -19,7 +19,7 @@ $APPLICATION->SetTitle("Кабинет покупателя");
 	Array(
 		"CACHE_TIME" => "3600",
 		"CACHE_TYPE" => "A",
-		"PAGE" => "#SITE_DIR#about/subscr_edit.php",
+		"PAGE" => "#SITE_DIR#/about/subscr_edit.php",
 		"SHOW_HIDDEN" => "N",
 		"USE_PERSONALIZATION" => "Y"
 	)
