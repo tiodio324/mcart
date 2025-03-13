@@ -83,7 +83,7 @@ $APPLICATION->SetTitle("Мои объявления");
 		"SEF_URL_TEMPLATES" => array(
 			"news" => "",
 			"section" => "",
-			"detail" => "[#CODE#]/",
+			"detail" => "#ELEMENT_CODE#/",
 		)
 	),
 	false

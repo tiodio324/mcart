@@ -1,39 +1,39 @@
 <?
 $aMenuLinks = Array(
 	Array(
-		"Главная", 
+		"Home", 
 		"/", 
 		Array(), 
-		Array(), 
+		Array("LOGO"=>"/local/templates/home/components/bitrix/header/logo.php"), 
 		"" 
 	),
 	Array(
-		"Объявления", 
-		"/obyavleniya/", 
-		Array(), 
-		Array(), 
-		"" 
-	),
-	Array(
-		"О сервисе", 
+		"Properties", 
 		"/o-servise/", 
 		Array(), 
 		Array(), 
 		"" 
 	),
 	Array(
-		"Кабинет продавца", 
-		"/kabinet-prodavtsa/", 
+		"Blog", 
+		"/kabinet-pokupatelya/", 
 		Array(), 
 		Array(), 
 		"CSite::InGroup(array(1,7))" 
 	),
 	Array(
-		"Кабинет покупателя", 
-		"/kabinet-pokupatelya/", 
+		"About", 
+		"/kabinet-prodavtsa/", 
 		Array(), 
 		Array(), 
 		"CSite::InGroup(array(1,6))" 
+	),
+	Array(
+		"Contact", 
+		"/obyavleniya/", 
+		Array(), 
+		Array(), 
+		"" 
 	)
 );
 ?>

@@ -1,32 +1,12 @@
 <?
 require($_SERVER["DOCUMENT_ROOT"]."/bitrix/header.php");
 $APPLICATION->SetTitle("Мебельная компания");
-?><?$APPLICATION->IncludeComponent(
-	"bitrix:menu",
-	"horizontal_multilevel",
-	Array(
-		"ALLOW_MULTI_SELECT" => "N",
-		"CHILD_MENU_TYPE" => "left",
-		"COMPONENT_TEMPLATE" => "horizontal_multilevel",
-		"DELAY" => "N",
-		"MAX_LEVEL" => "3",
-		"MENU_CACHE_GET_VARS" => array(),
-		"MENU_CACHE_TIME" => "3600",
-		"MENU_CACHE_TYPE" => "N",
-		"MENU_CACHE_USE_GROUPS" => "Y",
-		"MENU_THEME" => "site",
-		"ROOT_MENU_TYPE" => "top",
-		"USE_EXT" => "N"
-	)
-);?><br>
- <br>
- <br>
- <?
+?><?
 global $arrFilter;
 $arrFilter = array("PROPERTY_PRIMARY_ORDER_VALUE" => 'Да');
-?> <?$APPLICATION->IncludeComponent(
+?><?$APPLICATION->IncludeComponent(
 	"bitrix:news.list",
-	"",
+	"slider",
 	Array(
 		"ACTIVE_DATE_FORMAT" => "d.m.Y",
 		"ADD_SECTIONS_CHAIN" => "Y",
@@ -40,6 +20,7 @@ $arrFilter = array("PROPERTY_PRIMARY_ORDER_VALUE" => 'Да');
 		"CACHE_TIME" => "172800",
 		"CACHE_TYPE" => "A",
 		"CHECK_DATES" => "Y",
+		"COMPONENT_TEMPLATE" => "slider",
 		"DETAIL_URL" => "",
 		"DISPLAY_BOTTOM_PAGER" => "Y",
 		"DISPLAY_DATE" => "Y",
@@ -47,7 +28,7 @@ $arrFilter = array("PROPERTY_PRIMARY_ORDER_VALUE" => 'Да');
 		"DISPLAY_PICTURE" => "Y",
 		"DISPLAY_PREVIEW_TEXT" => "Y",
 		"DISPLAY_TOP_PAGER" => "N",
-		"FIELD_CODE" => array("",""),
+		"FIELD_CODE" => array(0=>"",1=>"",),
 		"FILTER_NAME" => "arrFilter",
 		"HIDE_LINK_WHEN_NO_DETAIL" => "N",
 		"IBLOCK_ID" => "4",
@@ -66,7 +47,7 @@ $arrFilter = array("PROPERTY_PRIMARY_ORDER_VALUE" => 'Да');
 		"PARENT_SECTION" => "",
 		"PARENT_SECTION_CODE" => "",
 		"PREVIEW_TRUNCATE_LEN" => "",
-		"PROPERTY_CODE" => array("",""),
+		"PROPERTY_CODE" => array(0=>"LINK",1=>"PRICE",2=>"",),
 		"SET_BROWSER_TITLE" => "Y",
 		"SET_LAST_MODIFIED" => "N",
 		"SET_META_DESCRIPTION" => "Y",
@@ -110,38 +91,70 @@ $arrFilter = array("PROPERTY_PRIMARY_ORDER_VALUE" => 'Да');
 		"EDIT_TEMPLATE" => ""
 	)
 );?><br>
- <br>
- <?$APPLICATION->IncludeComponent(
-	"bitrix:news.line",
-	"",
-	Array(
+<div class="site-section site-section-sm bg-light">
+	<div class="container">
+		<div class="row mb-5">
+			<div class="col-12">
+				<div class="site-section-title">
+					<h2>New Properties for You</h2>
+				</div>
+			</div>
+		</div>
+		 <?$APPLICATION->IncludeComponent(
+	"bitrix:news.line", 
+	"newPropertiesForYou", 
+	array(
 		"ACTIVE_DATE_FORMAT" => "d.m.Y",
 		"CACHE_GROUPS" => "Y",
-		"CACHE_TIME" => "172800",
+		"CACHE_TIME" => "300",
 		"CACHE_TYPE" => "A",
+		"COMPONENT_TEMPLATE" => "newPropertiesForYou",
 		"DETAIL_URL" => "",
-		"FIELD_CODE" => array("",""),
-		"IBLOCKS" => array("4"),
+		"FIELD_CODE" => array(
+			0 => "PREVIEW_PICTURE",
+			1 => "PROPERTY_PRICE",
+			2 => "PROPERTY_TOTAL_AREA",
+			3 => "PROPERTY_BATHROOMS_NUMBER",
+			4 => "PROPERTY_GARAGE_AVAILABILITY",
+			5 => "",
+		),
+		"IBLOCKS" => array(
+			0 => "4",
+		),
 		"IBLOCK_TYPE" => "advertisements",
-		"NEWS_COUNT" => "9",
+		"NEWS_COUNT" => "6",
 		"SORT_BY1" => "TIMESTAMP_X",
 		"SORT_BY2" => "SORT",
 		"SORT_ORDER1" => "DESC",
 		"SORT_ORDER2" => "ASC"
-	)
+	),
+	false
 );?><br>
- <br>
- <?$APPLICATION->IncludeComponent(
+	</div>
+</div>
+<div class="site-section">
+	<div class="container">
+		<div class="row justify-content-center">
+			<div class="col-md-7 text-center mb-5">
+				<div class="site-section-title">
+					<h2>Our Services</h2>
+				</div>
+			</div>
+		</div>
+		 <?$APPLICATION->IncludeComponent(
 	"bitrix:news.line",
-	"",
+	"ourServices",
 	Array(
 		"ACTIVE_DATE_FORMAT" => "d.m.Y",
 		"CACHE_GROUPS" => "Y",
 		"CACHE_TIME" => "7776000",
 		"CACHE_TYPE" => "A",
 		"DETAIL_URL" => "",
-		"FIELD_CODE" => array("",""),
-		"IBLOCKS" => array("5"),
+		"FIELD_CODE" => array(
+			0 => "PROPERTY_LINK",
+			1 => "",
+		),
+		"IBLOCKS" => array(0=>"5",),
 		"IBLOCK_TYPE" => "services",
 		"NEWS_COUNT" => "6",
 		"SORT_BY1" => "ACTIVE_FROM",
@@ -150,18 +163,29 @@ $arrFilter = array("PROPERTY_PRIMARY_ORDER_VALUE" => 'Да');
 		"SORT_ORDER2" => "ASC"
 	)
 );?><br>
- <br>
-<?$APPLICATION->IncludeComponent(
+	</div>
+</div>
+<div class="site-section bg-light">
+	<div class="container">
+		<div class="row justify-content-center mb-5">
+			<div class="col-md-7 text-center">
+				<div class="site-section-title">
+					<h2>Our Blog</h2>
+				</div>
+			</div>
+		</div>
+		 <?$APPLICATION->IncludeComponent(
 	"bitrix:news.line",
-	"",
+	"ourBlog",
 	Array(
-		"ACTIVE_DATE_FORMAT" => "d.m.Y",
+		"ACTIVE_DATE_FORMAT" => "f j, Y",
 		"CACHE_GROUPS" => "Y",
 		"CACHE_TIME" => "604800",
 		"CACHE_TYPE" => "A",
+		"COMPONENT_TEMPLATE" => "ourBlog",
 		"DETAIL_URL" => "",
-		"FIELD_CODE" => array("",""),
-		"IBLOCKS" => array("1"),
+		"FIELD_CODE" => array(0=>"PREVIEW_TEXT",1=>"PREVIEW_PICTURE",2=>"DATE_ACTIVE_FROM",3=>"",),
+		"IBLOCKS" => array(0=>"1",),
 		"IBLOCK_TYPE" => "news",
 		"NEWS_COUNT" => "3",
 		"SORT_BY1" => "TIMESTAMP_X",
@@ -169,4 +193,7 @@ $arrFilter = array("PROPERTY_PRIMARY_ORDER_VALUE" => 'Да');
 		"SORT_ORDER1" => "DESC",
 		"SORT_ORDER2" => "ASC"
 	)
-);?><?require($_SERVER["DOCUMENT_ROOT"]."/bitrix/footer.php");?>
+);?><br>
+	</div>
+</div>
+<?require($_SERVER["DOCUMENT_ROOT"]."/bitrix/footer.php");?>

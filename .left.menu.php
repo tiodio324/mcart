@@ -1,4 +1,60 @@
 <?
 $aMenuLinks = Array(
+	Array(
+		"Home", 
+		"", 
+		Array(), 
+		Array(), 
+		"" 
+	),
+	Array(
+		"Buy", 
+		"", 
+		Array(), 
+		Array(), 
+		"" 
+	),
+	Array(
+		"Rent", 
+		"", 
+		Array(), 
+		Array(), 
+		"" 
+	),
+	Array(
+		"Properties", 
+		"", 
+		Array(), 
+		Array(), 
+		"" 
+	),
+	Array(
+		"About Us", 
+		"", 
+		Array(), 
+		Array(), 
+		"" 
+	),
+	Array(
+		"Privacy Policy", 
+		"", 
+		Array(), 
+		Array(), 
+		"" 
+	),
+	Array(
+		"Contact Us", 
+		"", 
+		Array(), 
+		Array(), 
+		"" 
+	),
+	Array(
+		"Terms", 
+		"", 
+		Array(), 
+		Array(), 
+		"" 
+	)
 );
 ?>
