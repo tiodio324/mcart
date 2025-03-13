@@ -9,6 +9,4 @@ $APPLICATION->SetTitle("О сервисе");
 		"AREA_FILE_SUFFIX" => "inc",
 		"EDIT_TEMPLATE" => ""
 	)
-);?><br>
- <br>
-<?require($_SERVER["DOCUMENT_ROOT"]."/bitrix/footer.php");?>
+);?><br><?require($_SERVER["DOCUMENT_ROOT"]."/bitrix/footer.php");?>

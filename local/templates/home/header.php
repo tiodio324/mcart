@@ -120,23 +120,38 @@ IncludeTemplateLangFile(__FILE__);
 		          		<span class="icon-menu h3"></span>
 		          	</a>
 		          </div>
-              <?$APPLICATION->IncludeComponent(
-	              "bitrix:menu",
-	              "top_menu",
-	              Array(
-	              	"ALLOW_MULTI_SELECT" => "N",
-	              	"CHILD_MENU_TYPE" => "left",
-	              	"DELAY" => "N",
-	              	"MAX_LEVEL" => "3",
-	              	"MENU_CACHE_GET_VARS" => array(""),
-	              	"MENU_CACHE_TIME" => "3600",
-	              	"MENU_CACHE_TYPE" => "A",
-	              	"MENU_CACHE_USE_GROUPS" => "Y",
-	              	"MENU_THEME" => "site",
-	              	"ROOT_MENU_TYPE" => "top",
-	              	"USE_EXT" => "N"
-	              )
-              );?>
+              <?
+                $currentUrl = $_SERVER['REQUEST_URI'];
+                if ($currentUrl === '/index.php' || $currentUrl === '/') {
+              ?>
+                <?$APPLICATION->IncludeComponent(
+	                "bitrix:menu",
+	                "top_menu",
+	                Array(
+	                	"ALLOW_MULTI_SELECT" => "N",
+	                	"CHILD_MENU_TYPE" => "left",
+	                	"DELAY" => "N",
+	                	"MAX_LEVEL" => "3",
+	                	"MENU_CACHE_GET_VARS" => array(""),
+	                	"MENU_CACHE_TIME" => "3600",
+	                	"MENU_CACHE_TYPE" => "A",
+	                	"MENU_CACHE_USE_GROUPS" => "Y",
+	                	"MENU_THEME" => "site",
+	                	"ROOT_MENU_TYPE" => "top",
+	                	"USE_EXT" => "N"
+	                )
+                );?>
+              <?} else {?>
+                <?$APPLICATION->IncludeComponent(
+    	            "bitrix:breadcrumb",
+    	            "",
+    	            Array(
+    	            	"PATH" => "",
+    	            	"SITE_ID" => "s1",
+    	            	"START_FROM" => "0"
+    	            )
+                );?>
+              <?}?>
             </nav>
           </div>
         </div>
