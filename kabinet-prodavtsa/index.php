@@ -5,7 +5,7 @@ $APPLICATION->SetTitle("Кабинет продавца");
 	"bitrix:main.profile",
 	"",
 	Array(
-		"CHECK_RIGHTS" => "N",
+		"CHECK_RIGHTS" => "Y",
 		"SEND_INFO" => "N",
 		"SET_TITLE" => "Y",
 		"USER_PROPERTY" => array(),

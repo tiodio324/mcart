@@ -5,9 +5,9 @@ $APPLICATION->SetTitle("Мебельная компания");
 global $arrFilter;
 $arrFilter = array("PROPERTY_PRIMARY_ORDER_VALUE" => 'Да');
 ?><?$APPLICATION->IncludeComponent(
-	"bitrix:news.list",
-	"slider",
-	Array(
+	"bitrix:news.list", 
+	"slider", 
+	array(
 		"ACTIVE_DATE_FORMAT" => "d.m.Y",
 		"ADD_SECTIONS_CHAIN" => "Y",
 		"AJAX_MODE" => "N",
@@ -28,7 +28,10 @@ $arrFilter = array("PROPERTY_PRIMARY_ORDER_VALUE" => 'Да');
 		"DISPLAY_PICTURE" => "Y",
 		"DISPLAY_PREVIEW_TEXT" => "Y",
 		"DISPLAY_TOP_PAGER" => "N",
-		"FIELD_CODE" => array(0=>"",1=>"",),
+		"FIELD_CODE" => array(
+			0 => "",
+			1 => "",
+		),
 		"FILTER_NAME" => "arrFilter",
 		"HIDE_LINK_WHEN_NO_DETAIL" => "N",
 		"IBLOCK_ID" => "4",
@@ -47,7 +50,11 @@ $arrFilter = array("PROPERTY_PRIMARY_ORDER_VALUE" => 'Да');
 		"PARENT_SECTION" => "",
 		"PARENT_SECTION_CODE" => "",
 		"PREVIEW_TRUNCATE_LEN" => "",
-		"PROPERTY_CODE" => array(0=>"LINK",1=>"PRICE",2=>"",),
+		"PROPERTY_CODE" => array(
+			0 => "PRICE",
+			1 => "",
+			2 => "",
+		),
 		"SET_BROWSER_TITLE" => "Y",
 		"SET_LAST_MODIFIED" => "N",
 		"SET_META_DESCRIPTION" => "Y",
@@ -60,7 +67,8 @@ $arrFilter = array("PROPERTY_PRIMARY_ORDER_VALUE" => 'Да');
 		"SORT_ORDER1" => "DESC",
 		"SORT_ORDER2" => "ASC",
 		"STRICT_SECTION_CHECK" => "N"
-	)
+	),
+	false
 );?><br>
  <br>
  <br>
