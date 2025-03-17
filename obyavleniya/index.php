@@ -11,16 +11,8 @@ $APPLICATION->SetTitle("Объявления");
 		"EDIT_TEMPLATE" => ""
 	)
 );?><br>
-	<div class="site-section site-section-sm bg-light">
-		<div class="container">
-			<div class="row mb-5">
-				<div class="col-12">
-					<div class="site-section-title">
-						<h2>New Properties for You</h2>
-					</div>
-				</div>
-			</div>
-			 <?$APPLICATION->IncludeComponent(
+	
+<?$APPLICATION->IncludeComponent(
 	"bitrix:news", 
 	"newPropertiesForYou", 
 	array(
@@ -110,11 +102,9 @@ $APPLICATION->SetTitle("Объявления");
 			"news" => "",
 			"section" => "",
 			"detail" => "#ELEMENT_CODE#/",
-		)
+		),
+		"DISPLAY_CUSTOM_TITLE" => "New Properties for You",
 	),
 	false
-);?><br>
-		</div>
-	</div>
-</div>
-<br><?require($_SERVER["DOCUMENT_ROOT"]."/bitrix/footer.php");?>
+);?></div>
+<?require($_SERVER["DOCUMENT_ROOT"]."/bitrix/footer.php");?>
