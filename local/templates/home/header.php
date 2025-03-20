@@ -147,10 +147,14 @@ IncludeTemplateLangFile(__FILE__);
                     <div class="row align-items-center justify-content-center text-center">
                       <div class="col-md-10">
                         <h1 class="mb-2"><?$APPLICATION->ShowTitle();?></h1>
-                        <?$APPLICATION->IncludeComponent("bitrix:breadcrumb", "inner_top_menu", Array(
-	                        "PATH" => "",
+                        <?$APPLICATION->IncludeComponent(
+	                        "bitrix:breadcrumb", 
+	                        "inner_top_menu", 
+	                        array(
+	                        	"PATH" => "",
 	                        	"SITE_ID" => "s1",
 	                        	"START_FROM" => "0",
+	                        	"COMPONENT_TEMPLATE" => "inner_top_menu"
 	                        ),
 	                        false
                         );?>

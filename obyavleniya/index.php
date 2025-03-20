@@ -54,7 +54,7 @@ $APPLICATION->SetTitle("Объявления");
 		"HIDE_LINK_WHEN_NO_DETAIL" => "N",
 		"IBLOCK_ID" => "4",
 		"IBLOCK_TYPE" => "advertisements",
-		"INCLUDE_IBLOCK_INTO_CHAIN" => "Y",
+		"INCLUDE_IBLOCK_INTO_CHAIN" => "N",
 		"LIST_ACTIVE_DATE_FORMAT" => "d.m.Y",
 		"LIST_FIELD_CODE" => array(
 			0 => "",
@@ -98,12 +98,12 @@ $APPLICATION->SetTitle("Объявления");
 		"USE_RSS" => "N",
 		"USE_SEARCH" => "N",
 		"USE_SHARE" => "N",
+		"DISPLAY_CUSTOM_TITLE" => "New Properties for You",
 		"SEF_URL_TEMPLATES" => array(
 			"news" => "",
 			"section" => "",
 			"detail" => "#ELEMENT_CODE#/",
-		),
-		"DISPLAY_CUSTOM_TITLE" => "New Properties for You",
+		)
 	),
 	false
 );?></div>
