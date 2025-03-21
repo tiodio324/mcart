@@ -143,8 +143,8 @@ IncludeTemplateLangFile(__FILE__);
       </div>
     </div>
     <?
-      $currentUrl = $_SERVER['REQUEST_URI'];
-      if ($currentUrl !== '/index.php' && $currentUrl !== '/') {
+      $currentPage = $APPLICATION->GetCurPage();
+      if ($currentPage !== '/') {
     ?>
       <div class="site-blocks-cover inner-page-cover overlay" style="background-image: url(/local/templates/home/images/hero_bg_2.jpg);" data-aos="fade" data-stellar-background-ratio="0.5">
         <div class="container">

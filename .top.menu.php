@@ -1,10 +1,10 @@
 <?
 $aMenuLinks = Array(
 	Array(
-		"Home", 
-		"/", 
+		"Главная", 
+		"/index.php", 
 		Array(), 
-		Array("LOGO"=>"/local/templates/home/components/bitrix/header/logo.php"), 
+		Array(), 
 		"" 
 	),
 	Array(
@@ -15,32 +15,25 @@ $aMenuLinks = Array(
 		"" 
 	),
 	Array(
-		"Properties", 
+		"О сервисе", 
 		"/o-servise/", 
 		Array(), 
 		Array(), 
 		"" 
 	),
 	Array(
-		"Blog", 
-		"/kabinet-pokupatelya/", 
-		Array(), 
-		Array(), 
-		"CSite::InGroup(array(1,7))" 
-	),
-	Array(
-		"About", 
+		"Кабинет продавца", 
 		"/kabinet-prodavtsa/", 
 		Array(), 
 		Array(), 
 		"CSite::InGroup(array(1,6))" 
 	),
 	Array(
-		"Contact", 
-		"/obyavleniya/", 
+		"Кабинет покупателя", 
+		"/kabinet-pokupatelya/", 
 		Array(), 
 		Array(), 
-		"" 
+		"CSite::InGroup(array(1,7))" 
 	)
 );
 ?>
