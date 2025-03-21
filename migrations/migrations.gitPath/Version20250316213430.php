@@ -350,31 +350,19 @@ class Version20250316213430 extends Version
 
     /**
      * @throws Exceptions\HelperException
-     * @throws Exceptions\RestartException
      * @return bool|void
      */
     public function down()
     {
-        //Удаляем все элементы по 10 штук за раз
-
+        // Удаляем сам Highload блок
         $helper = $this->getHelperManager();
         $hlblockId = $helper->Hlblock()->getHlblockIdIfExists('Agents');
-
-        $elements = $helper->Hlblock()->getElements($hlblockId);
-
-        $bFound = 0;
-
-        foreach ($elements as $aItem) {
-          $helper->Hlblock()->deleteElement($aItem['ID'], $hlblockId);
-          $this->out('deleted %d', $aItem['ID']);
-          $bFound++;
-          if ($bFound >= 10) {
-              break;
-          }
-      }
-
-        if ($bFound) {
-            $this->restart();
+        
+        if ($hlblockId) {
+            $helper->Hlblock()->deleteHlblock($hlblockId);
+            $this->out('Highload block "Agents" with ID %d was deleted', $hlblockId);
+        } else {
+            $this->out('Highload block "Agents" not found');
         }
     }
 }
