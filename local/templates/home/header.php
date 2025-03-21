@@ -120,52 +120,51 @@ IncludeTemplateLangFile(__FILE__);
 		          		<span class="icon-menu h3"></span>
 		          	</a>
 		          </div>
-              <?
-                $currentUrl = $_SERVER['REQUEST_URI'];
-                if ($currentUrl === '/index.php' || $currentUrl === '/') {
-              ?>
-                <?$APPLICATION->IncludeComponent(
-	                "bitrix:menu",
-	                "top_menu",
-	                Array(
-	                	"ALLOW_MULTI_SELECT" => "N",
-	                	"CHILD_MENU_TYPE" => "left",
-	                	"DELAY" => "N",
-	                	"MAX_LEVEL" => "3",
-	                	"MENU_CACHE_GET_VARS" => array(""),
-	                	"MENU_CACHE_TIME" => "3600",
-	                	"MENU_CACHE_TYPE" => "A",
-	                	"MENU_CACHE_USE_GROUPS" => "Y",
-	                	"MENU_THEME" => "site",
-	                	"ROOT_MENU_TYPE" => "top",
-	                	"USE_EXT" => "N"
-	                )
-                );?>
-              <?} else {?>
-                <div class="site-blocks-cover inner-page-cover overlay" style="background-image: url(/local/templates/home/images/hero_bg_2.jpg);" data-aos="fade" data-stellar-background-ratio="0.5">
-                  <div class="container">
-                    <div class="row align-items-center justify-content-center text-center">
-                      <div class="col-md-10">
-                        <h1 class="mb-2"><?$APPLICATION->ShowTitle();?></h1>
-                        <?$APPLICATION->IncludeComponent(
-	                        "bitrix:breadcrumb", 
-	                        "inner_top_menu", 
-	                        array(
-	                        	"PATH" => "",
-	                        	"SITE_ID" => "s1",
-	                        	"START_FROM" => "0",
-	                        	"COMPONENT_TEMPLATE" => "inner_top_menu"
-	                        ),
-	                        false
-                        );?>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              <?}?>
+              <?$APPLICATION->IncludeComponent(
+	              "bitrix:menu",
+	              "top_menu",
+	              Array(
+	              	"ALLOW_MULTI_SELECT" => "N",
+	              	"CHILD_MENU_TYPE" => "left",
+	              	"DELAY" => "N",
+	              	"MAX_LEVEL" => "3",
+	              	"MENU_CACHE_GET_VARS" => array(""),
+	              	"MENU_CACHE_TIME" => "3600",
+	              	"MENU_CACHE_TYPE" => "A",
+	              	"MENU_CACHE_USE_GROUPS" => "Y",
+	              	"MENU_THEME" => "site",
+	              	"ROOT_MENU_TYPE" => "top",
+	              	"USE_EXT" => "N"
+	              )
+              );?>
             </nav>
           </div>
         </div>
       </div>
     </div>
+    <?
+      $currentUrl = $_SERVER['REQUEST_URI'];
+      if ($currentUrl !== '/index.php' && $currentUrl !== '/') {
+    ?>
+      <div class="site-blocks-cover inner-page-cover overlay" style="background-image: url(/local/templates/home/images/hero_bg_2.jpg);" data-aos="fade" data-stellar-background-ratio="0.5">
+        <div class="container">
+          <div class="row align-items-center justify-content-center text-center">
+            <div class="col-md-10">
+              <h1 class="mb-2"><?$APPLICATION->ShowTitle();?></h1>
+              <?$APPLICATION->IncludeComponent(
+	              "bitrix:breadcrumb", 
+	              "inner_top_menu", 
+	              array(
+	              	"PATH" => "",
+	              	"SITE_ID" => "s1",
+	              	"START_FROM" => "0",
+	              	"COMPONENT_TEMPLATE" => "inner_top_menu"
+	              ),
+	              false
+              );?>
+            </div>
+          </div>
+        </div>
+      </div>
+    <?}?>
   </div>
