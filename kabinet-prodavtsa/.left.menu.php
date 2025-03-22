@@ -5,7 +5,7 @@ $aMenuLinks = Array(
 		"/kabinet-prodavtsa/moi-obyavleniya/", 
 		Array(), 
 		Array(), 
-		"" 
+		"CSite::InGroup(array(1,7))" 
 	)
 );
 ?>
