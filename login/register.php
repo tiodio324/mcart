@@ -1,7 +1,11 @@
 <?
 require($_SERVER["DOCUMENT_ROOT"]."/bitrix/header.php");
 $APPLICATION->SetTitle("register");
-?><?$APPLICATION->IncludeComponent(
+?>
+<div class="site-wrap">
+	<div class="site-section">
+		<div class="container">
+<?$APPLICATION->IncludeComponent(
 	"bitrix:main.register", 
 	".default", 
 	array(
@@ -25,4 +29,7 @@ $APPLICATION->SetTitle("register");
 		"COMPONENT_TEMPLATE" => ".default"
 	),
 	false
-);?><?require($_SERVER["DOCUMENT_ROOT"]."/bitrix/footer.php");?>
+);?>
+		</div>
+	</div>
+</div><?require($_SERVER["DOCUMENT_ROOT"]."/bitrix/footer.php");?>
