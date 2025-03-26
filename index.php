@@ -53,7 +53,6 @@ $arrFilter = array("PROPERTY_PRIMARY_ORDER_VALUE" => 'Да');
 		"PROPERTY_CODE" => array(
 			0 => "PRICE",
 			1 => "",
-			2 => "",
 		),
 		"SET_BROWSER_TITLE" => "Y",
 		"SET_LAST_MODIFIED" => "N",

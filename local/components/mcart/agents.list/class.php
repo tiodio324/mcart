@@ -85,7 +85,6 @@ class AgentsList extends CBitrixComponent implements Controllerable, Errorable
     {
         $this->initCache($arParams); // создание параметров для работы кеша
 
-
         // Проверка подключение модуля highloadblock, отдать ошибку если модуль не подключен
         if (!Loader::includeModule('highloadblock')) {
             $this->addError(
@@ -93,12 +92,13 @@ class AgentsList extends CBitrixComponent implements Controllerable, Errorable
             );
         }
 
+        if (!isset($arParams['HLBLOCK_TCACHE_TIME']) || empty($arParams['HLBLOCK_TCACHE_TIME'])) {
+            $arParams['HLBLOCK_TCACHE_TIME'] = 36000;
+        }
 
-        /*
-         * Нужно проверить, что заданы значения в $arParams "Время кеширования" и "Количество элементов"
-         * Если не заданы, то указать дефолтные значения
-         */
-
+        if (!isset($arParams['HLBLOCK_TPAGINATION_ELEMS']) || empty($arParams['HLBLOCK_TPAGINATION_ELEMS'])) {
+            $arParams['HLBLOCK_TPAGINATION_ELEMS'] = 0;
+        }
 
         return parent::onPrepareComponentParams($arParams);
     }
@@ -117,11 +117,9 @@ class AgentsList extends CBitrixComponent implements Controllerable, Errorable
     final public function executeComponent(): void
     {
         if (empty($this->arParams["HLBLOCK_TNAME"])) {
-            /**
-             * Если параметр Название таблицы (TABLE_NAME) Highload-блока не задан,
-             * нужно отдать ошибку (Loc::getMessage('MCART_AGENTS_LIST_NOT_HLBLOCK_TNAME')).
-             * Пример как создать ошибку есть выше при проверки подключения модуля "highloadblock"
-             */
+            $this->addError(
+                new Error(Loc::getMessage('MCART_AGENTS_LIST_NOT_HLBLOCK_TNAME'), 404)
+            );
         }
 
         if ($this->showErrors()) {
@@ -130,7 +128,7 @@ class AgentsList extends CBitrixComponent implements Controllerable, Errorable
 
         // https://dev.1c-bitrix.ru/api_help/main/reference/cphpcache/initcache.php в данном компоненте используется Bitrix\Main\Data\Cache::initCache из нового ядра
         if ($this->cache->initCache(
-            $this->arParams["CACHE_TIME"],
+            $this->arParams["HLBLOCK_TCACHE_TIME"],
             $this->cacheKey,
             $this->cachePatch
         )) { // если кеш есть
@@ -145,9 +143,8 @@ class AgentsList extends CBitrixComponent implements Controllerable, Errorable
             $this->taggedCache->registerTag('hlblock_table_name_' . $arHlblock['TABLE_NAME']); // Регистрируем кеш, чтобы по нему на событиях добавление/изменение/удаление элементов хлблока сбрасывать кеш компонента
 
             $entity = self::getEntityDataClassById($arHlblock); // получить класс для работы с хлблоком
-            $arTypeAgents = self::getFieldListValue($arHlblock, 'UF_TYPE'); // получить массив со значениями списочного свойства Виды деятельности агентов
+            $arTypeAgents = self::getFieldListValue($arHlblock, 'UF_ACTIVITY_TYPE'); // получить массив со значениями списочного свойства Виды деятельности агентов
             $this->arResult['AGENTS'] = $this->getAgents($entity, $arTypeAgents); // получить массив со списком агентов и объектом для пагинации
-
 
             if ($this->cacheInvalid) {
                 $this->taggedCache->abortTagCache();
@@ -162,14 +159,15 @@ class AgentsList extends CBitrixComponent implements Controllerable, Errorable
          * Получить Избранных агентов для текущего пользователя записать их в массив $this->arResult['STAR_AGENTS']
          * Это можно зделать с помощью CUserOptions::GetOption
          */ 
-         $this->arResult['STAR_AGENTS'] = CUserOptions::GetOption($category, $name);
-        /*
-         * Данного метода нет в документации, код метода и его параметры можно найти в ядре (/bitrix/modules/main/) или в гугле
-         * $category - это категория настройки, можете придумать любую, например mcart_agent
-         * $name - это название настройки, например options_agents_star
-         * Эти настройки храняться в таблице b_user_option
-         */
+        $category = 'mcart_agent';
+        $name = 'options_agents_star';
 
+        $starAgents = CUserOptions::GetOption($category, $name, []);
+        if (!is_array($starAgents)) {
+            $starAgents = [];
+        }
+
+        $this->arResult['STAR_AGENTS'] = $starAgents;
 
         $this->IncludeComponentTemplate(); // вызов шаблона компонента
     }
@@ -191,11 +189,11 @@ class AgentsList extends CBitrixComponent implements Controllerable, Errorable
          */
         $result = HighloadBlockTable::getList([
             'filter' => [
-                // Указать фильтр по полю "TABLE_NAME"
+                'TABLE_NAME' => $hl_block_name,
             ], 
         ]);
 
-        if ($row = $result->fetch()) { // Получим результат запросв
+        if ($row = $result->fetch()) { // Получим результат запроса
             return $row;
         }
 
@@ -219,8 +217,15 @@ class AgentsList extends CBitrixComponent implements Controllerable, Errorable
          * Написать запрос для получения класса хлблока (нужно использовать getDataClass())
          * https://tichiy.ru/wiki/rabota-s-highload-blokami-bitriks-cherez-api-d7/
          */
+        $ID = $arHlblock['ID'];
 
-        return '';
+        $hlblock = HighloadBlockTable::getById($ID)->fetch(); 
+
+        $entity = HighloadBlockTable::compileEntity($hlblock);
+        $entity_data_class = $entity->getDataClass();
+
+
+        return $entity_data_class;
     }
 
     /**
@@ -242,9 +247,18 @@ class AgentsList extends CBitrixComponent implements Controllerable, Errorable
         ])->Fetch()["ID"];
 
         if ($fieldID) {
-            /*
-             *  Получить список свойств для $fieldID используя класс CUserFieldEnum
-             */
+            // Получаем список свойств для $fieldID используя класс CUserFieldEnum
+            $enumList = \CUserFieldEnum::GetList([], [
+                'USER_FIELD_ID' => $fieldID,
+            ]);
+
+            while ($enum = $enumList->Fetch()) {
+                $result[] = [
+                    'ID' => $enum['ID'],
+                    'VALUE' => $enum['VALUE'],
+                    'XML_ID' => $enum['XML_ID'],
+                ];
+            }
         }
 
         return $result;
@@ -263,19 +277,25 @@ class AgentsList extends CBitrixComponent implements Controllerable, Errorable
             'ITEMS' => [], // список агентов
         ];
 
-        // Объек для для пагинации, подробнее можно почитать 
+        // Объект для пагинации, подробнее можно почитать 
         $nav = new \Bitrix\Main\UI\PageNavigation("nav-agents");
         $nav->allowAllRecords(true)
-            ->setPageSize($this->arParams['']) //Нужно передать параметр Количество элементов из мввсива $this->arParams
+            ->setPageSize($this->arParams['HLBLOCK_TPAGINATION_ELEMS']) // Нужно передать параметр Количество элементов из массива $this->arParams
             ->initFromUri();
 
-        
+        // Запрос списка "Активных" агентов
         $rsAgents = $entity::GetList([
             /*
              * С помощью GetList запросить список "Активных" агентов,
              * в запросе ограничить количество агентов (использовать объект для пагинации) 
              * https://dev.1c-bitrix.ru/learning/course/index.php?COURSE_ID=43&LESSON_ID=2741
              */
+            'filter' => [
+                'UF_ACTIVE' => '1', // Фильтр для активных агентов
+            ],
+            'limit' => $nav->getLimit(), // Ограничиваем количество записей на странице
+            'offset' => $nav->getOffset(), // Устанавливаем смещение для пагинации
+            'count_total' => true, // Получаем общее количество записей
         ]);
     
         while ($arAgent = $rsAgents->fetch()) {
@@ -288,6 +308,21 @@ class AgentsList extends CBitrixComponent implements Controllerable, Errorable
              * 2. В свойстве Фото записан ID файла из таблицы b_file,
              * если значение есть, то получить путь через класс \CFile
              */
+
+            // 1. Определяем значение для Вида деятельности из массива $arTypeAgents
+            if (isset($arAgent['UF_ACTIVITY_TYPE']) && !empty($arTypeAgents)) {
+                foreach ($arTypeAgents as $typeAgent) {
+                    if ($typeAgent['ID'] == $arAgent['UF_ACTIVITY_TYPE']) {
+                        $arAgent['UF_ACTIVITY_TYPE_VALUE'] = $typeAgent['VALUE'];
+                        break;
+                    }
+                }
+            }
+
+            // 2. Получаем путь к фото, если оно есть
+            if (!empty($arAgent['UF_AVATAR'])) {
+                $arAgent['UF_AVATAR_PATH'] = \CFile::GetPath($arAgent['UF_AVATAR']);
+            }
 
             $arAgents['ITEMS'][$arAgent['ID']] = $arAgent; // Записываем получившийся массив в $arAgents['ITEMS']
         }
@@ -327,7 +362,6 @@ class AgentsList extends CBitrixComponent implements Controllerable, Errorable
     public function clickStarAction($agentID)
     {
         $result = []; // ответ, который уйдет на фронт
-
         $value = []; // массив ID элементов, которые пользователь добавил в избраное
         /*
          * 1. Получить значения свойства из настроек пользователя (CUserOptions) для текущего пользователя
@@ -344,7 +378,53 @@ class AgentsList extends CBitrixComponent implements Controllerable, Errorable
          * 5. Отправить на фронт в массиве $result в ключе 'action' значение 'success', если все прошло удачно
          */
 
+        // Получаем значения свойства из настроек пользователя
+        $category = 'mcart_agent';
+        $name = 'options_agents_star';
 
+        $userOptions = CUserOptions::GetOption($category, $name, []);
+        
+        if ($userOptions) {
+            try {
+                // Проверяем, что значение - массив
+                if (!is_array($userOptions)) {
+                    $userOptions = [];
+                }
+
+                // Проверяем, есть ли в массиве $agentID
+                if (in_array($agentID, $userOptions)) {
+                    // Если есть, удаляем из массива
+                    $key = array_search($agentID, $userOptions);
+                    if ($key !== false) {
+                        unset($userOptions[$key]);
+                    }
+                } else {
+                    // Если нет, добавляем в массив
+                    $userOptions[] = $agentID;
+                }
+                
+                // Записываем результат в $value
+                $value = $userOptions;
+
+                // Записываем обновленный массив в настройки пользователя
+                CUserOptions::SetOption($category, $name, $value);
+
+                // Отправляем на фронт в массиве $result в ключе 'action' значение 'success'
+                $result['action'] = 'success';
+            } catch (\Exception $e) {
+                console.error($e->getMessage());
+            }
+        } else {
+            // Если значение нет, то $agentID записать в $value
+            $value[] = $agentID;
+            
+            // Записываем в настройки пользователя
+            CUserOptions::SetOption($category, $name, $value);
+            
+            // Отправляем на фронт успешный результат
+            $result['action'] = 'success';
+        }
+        
         return $result;
     }
 }

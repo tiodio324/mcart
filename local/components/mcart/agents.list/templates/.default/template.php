@@ -23,53 +23,73 @@ $this->setFrameMode(true);
         <div class="row mb-5">
           <div class="col-12">
             <div class="site-section-title">
-              <h2><?GetMessage("CUSTOM_LABEL")?></h2>
+              <h2><?echo GetMessage("CUSTOM_LABEL")?></h2>
             </div>
           </div>
         </div>
         <div class="mb-5">
-
-
-
-            <div class="agent__card">
-                <div class="small-info">
-                    <div class="avatar" style="background-image: url(images/person_1.jpg);"></div>
-                    <div class="info">
-                        <div class="name">Авдеев Святослав</div>
-                    </div>
-                </div>
-                <div class="agent__card_item">
-                    <div class="agent__card_info">
-                        <div class="card__info_item">
-                            <div class="position"><?GetMessage("CUSTOM_EMAIL")?></div>
-                            <div class="name">avdeev@gmail.com</div>
-                        </div>
-                        <div class="card__info_item">
-                            <div class="position"><?GetMessage("CUSTOM_PHONE")?></div>
-                            <div class="name">+7 (431) 434-42-43</div>
-                        </div>
-                        <div class="card__info_item">
-                            <div class="position"><?GetMessage("CUSTOM_ACTIVITY_TYPE")?></div>
-                            <div class="name">Брокер</div>
+        <?if (!empty($arResult['AGENTS']['ITEMS'])): ?>
+            <?foreach ($arResult['AGENTS']['ITEMS'] as $agent): ?>
+                <div class="agent__card">
+                    <div class="small-info">
+                        <?
+                        // Определяем путь к фото
+                        $photoPath = $agent['UF_AVATAR_PATH'] ?? '';
+                        if (empty($photoPath)) {
+                            $photoPath = $templateFolder . '/images/no-avatar.png';
+                        }
+                        ?>
+                        <div class="avatar" style="background-image: url('<?=$photoPath?>');"></div>
+                        <div class="info">
+                            <div class="name"><?=$agent['UF_FULLNAME']?></div>
                         </div>
                     </div>
+                    <div class="agent__card_item">
+                        <div class="agent__card_info">
+                            <div class="card__info_item">
+                                <div class="position"><?echo GetMessage("CUSTOM_EMAIL")?></div>
+                                <div class="name"><?=$agent['UF_EMAIL'] ?? ''?></div>
+                            </div>
+                            <div class="card__info_item">
+                                <div class="position"><?echo GetMessage("CUSTOM_PHONE")?></div>
+                                <div class="name"><?=$agent['UF_PHONE'] ?? ''?></div>
+                            </div>
+                            <div class="card__info_item">
+                                <div class="position"><?echo GetMessage("CUSTOM_ACTIVITY_TYPE")?></div>
+                                <div class="name"><?=$agent['UF_ACTIVITY_TYPE_VALUE'] ?? ''?></div>
+                            </div>
+                        </div>
+                    </div>
+                    <?
+                    // Определяем, находится ли агент в избранном
+                    $inFavorites = in_array($agent['ID'], $arResult['STAR_AGENTS']);
+                    $starClass = $inFavorites ? 'star active' : 'star';
+                    ?>
+                    <a class="<?=$starClass?>" data-agent-id="<?=$agent['ID']?>">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M12 4L14.472 9.26604L20 10.1157L16 14.2124L16.944 20L12 17.266L7.056 20L8 14.2124L4 10.1157L9.528 9.26604L12 4Z" stroke="#95929A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                    </a>
                 </div>
-                <a class="star">
-                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M12 4L14.472 9.26604L20 10.1157L16 14.2124L16.944 20L12 17.266L7.056 20L8 14.2124L4 10.1157L9.528 9.26604L12 4Z" stroke="#95929A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                    </svg>
-                </a>
-            </div>
+            <?endforeach;?>
+        <?else:?>
+            <p><?echo GetMessage("CUSTOM_NO_AGENTS")?></p>
+            <?endif;?>
+
         </div>
-        <?if($arParams["DISPLAY_BOTTOM_PAGER"]):?>
-	        <br /><?=$arResult["NAV_STRING"]?>
+        <?if (!empty($arResult['AGENTS']['NAV_OBJECT'])): ?>
+            <div class="pagination-container">
+                <?
+                    $APPLICATION->IncludeComponent("bitrix:main.pagenavigation", "agents", Array(
+	                    "NAV_OBJECT" => $arResult["AGENTS"]["NAV_OBJECT"],
+	                    	"SEF_MODE" => "N",
+	                    	"COMPONENT_TEMPLATE" => ".default"
+	                    ),
+	                    false
+                    );
+                ?>
+            </div>
         <?endif;?>
       </div>
     </div>
 </div>
-
-<?
-echo '<pre>';
-print_r($arResult); // для разработки в конечном коде убрать
-echo '</pre>';
-?>
