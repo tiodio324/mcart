@@ -1,0 +1,25 @@
+<?
+$aMenuLinks = Array(
+	Array(
+		"Карьера", 
+		"/s2/about/join/careers/", 
+		Array(), 
+		Array(), 
+		"" 
+	),
+	Array(
+		"Преимущества", 
+		"/s2/about/join/benefits/", 
+		Array(), 
+		Array(), 
+		"" 
+	),
+	Array(
+		"Вакансии", 
+		"/s2/about/join/vacancies/", 
+		Array(), 
+		Array(), 
+		"" 
+	)
+);
+?>

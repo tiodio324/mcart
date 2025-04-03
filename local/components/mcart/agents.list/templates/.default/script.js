@@ -42,7 +42,7 @@ function clickStar(event) {
                     if (response.status == 'success') {
                         // Отобразить пользователю, что агент добавлен в избраное
                         const starElement = event.target.closest('.star');
-                        starElement.classList.add('active');
+                        starElement.classList.toggle('active');
                     }
 
                 }, this)

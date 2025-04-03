@@ -6,10 +6,11 @@ IncludeTemplateLangFile(__FILE__);
 <!DOCTYPE html>
 <html lang=<?LANGUAGE_ID?>>
 <head>
+  <?$APPLICATION->ShowHead();?>
+
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <title><?$APPLICATION->ShowTitle();?></title>
 
-  <?$APPLICATION->ShowHead();?>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Nunito+Sans:200,300,400,700,900|Roboto+Mono:300,400,500&...;>
 
   <?
