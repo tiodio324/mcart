@@ -8,14 +8,29 @@
 					<div class="col-lg-4">
 
 						<div class="service-box">
-							<div class="services-list">
-								<a href="#"><i class="bi bi-arrow-right-circle"></i><span>Пункт меню 1</span></a>
-								<a href="#" class="active"><i class="bi bi-arrow-right-circle"></i><span>Пункт меню 2 -
-										активный</span></a>
-								<a href="#"><i class="bi bi-arrow-right-circle"></i><span>Пункт меню 3</span></a>
-								<a href="#"><i class="bi bi-arrow-right-circle"></i><span>Пункт меню 4</span></a>
-							</div>
+						<?$APPLICATION->IncludeComponent(
+	"bitrix:menu", 
+	"left_menu1", 
+	array(
+		"ALLOW_MULTI_SELECT" => "N",
+		"CHILD_MENU_TYPE" => "left",
+		"DELAY" => "N",
+		"MAX_LEVEL" => "1",
+		"MENU_CACHE_GET_VARS" => array(
+		),
+		"MENU_CACHE_TIME" => "3600",
+		"MENU_CACHE_TYPE" => "A",
+		"MENU_CACHE_USE_GROUPS" => "Y",
+		"ROOT_MENU_TYPE" => "left",
+		"USE_EXT" => "N",
+		"CACHE_SELECTED_ITEMS" => "Y",
+		"COMPONENT_TEMPLATE" => "left_menu1"
+	),
+	false
+);?>
 						</div>
+
+						
 
 						<div class="service-box">
 							<h4>Материалы</h4>
@@ -49,13 +64,13 @@
 										<p></p>
 									<?endif;
 								?>
-								<nav class="breadcrumbs">
-									<ol>
-										<li><a href="#">Главная</a></li>
-										<li><a href="#">Раздел 1</a></li>
-										<li><a href="#">Раздел 1.1</a></li>
-									</ol>
-								</nav>
+								<?$APPLICATION->IncludeComponent("bitrix:breadcrumb", "myBreadcrumb_content", Array(
+	"PATH" => "",	// Путь, для которого будет построена навигационная цепочка (по умолчанию, текущий путь)
+		"SITE_ID" => "s2",	// Cайт (устанавливается в случае многосайтовой версии, когда DOCUMENT_ROOT у сайтов разный)
+		"START_FROM" => "0",	// Номер пункта, начиная с которого будет построена навигационная цепочка
+	),
+	false
+);?>
 							</div>
 						</div>
 						<!-- End Content Page Title -->

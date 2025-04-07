@@ -3,7 +3,7 @@ require($_SERVER["DOCUMENT_ROOT"]."/bitrix/header.php");
 $APPLICATION->SetTitle("Портфолио");
 ?><?$APPLICATION->IncludeComponent(
 	"bitrix:catalog", 
-	"portfolio", 
+	"portfolio1", 
 	array(
 		"ACTION_VARIABLE" => "action",
 		"ADD_ELEMENT_CHAIN" => "N",
@@ -151,7 +151,7 @@ $APPLICATION->SetTitle("Портфолио");
 		"USE_PRICE_COUNT" => "N",
 		"USE_PRODUCT_QUANTITY" => "N",
 		"USE_STORE" => "N",
-		"COMPONENT_TEMPLATE" => "portfolio",
+		"COMPONENT_TEMPLATE" => "portfolio1",
 		"PRODUCT_PROPERTIES" => array(
 		),
 		"TOP_PROPERTY_CODE" => array(

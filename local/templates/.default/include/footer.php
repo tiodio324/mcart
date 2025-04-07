@@ -8,11 +8,11 @@
         <div class="container">
             <div class="row justify-content-center text-center">
                 <div class="col-lg-6">
-                    <h4>Поиск</h4>
+                    <h4><?echo GetMessage('FOOTER_SEARCH_LABEL')?></h4>
                     <form action="/s2/search/" method="post">
                         <div class="search-form">
                             <input class="input-seach" type="text" name="q">
-                            <input class="button-seach" name="s" type="submit" value="Найти">
+                            <input class="button-seach" name="s" type="submit" value="<?echo GetMessage('FOOTER_FIND_LABEL')?>">
                         </div>
                     </form>
                 </div>

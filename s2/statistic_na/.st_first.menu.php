@@ -1,0 +1,32 @@
+<?
+$aMenuLinks = Array(
+	Array(
+		"Дашборд", 
+		"/s2/statistic_na/dashboard/", 
+		Array(), 
+		Array("menu_ico"=>"grid"), 
+		"" 
+	),
+	Array(
+		"Основные", 
+		"/s2/statistic_na/main/", 
+		Array(), 
+		Array("menu_ico"=>"menu-button-wide"), 
+		"" 
+	),
+	Array(
+		"Дополнительные", 
+		"/s2/statistic_na/extra/", 
+		Array(), 
+		Array("menu_ico"=>"files"), 
+		"" 
+	),
+	Array(
+		"Профиль", 
+		"/s2/statistic_na/profile/", 
+		Array(), 
+		Array("menu_ico"=>"person"), 
+		"" 
+	)
+);
+?>

@@ -5,11 +5,10 @@ IncludeTemplateLangFile(__FILE__);
 ?>
 <?require_once $_SERVER["DOCUMENT_ROOT"] . "/local/templates/.default/include/boot.php";?>
 <!DOCTYPE html>
-<html lang=<?LANGUAGE_ID?>>
+<html lang=<?=LANGUAGE_ID?>>
 
 <head>
 	<?$APPLICATION->ShowHead();?>
-	<meta charset="utf-8">
 	<meta content="width=device-width, initial-scale=1.0" name="viewport">
 	<title><?$APPLICATION->ShowTitle();?></title>
 
@@ -42,11 +41,11 @@ IncludeTemplateLangFile(__FILE__);
 			</a>
 			<?$APPLICATION->IncludeComponent(
 	"bitrix:menu", 
-	"top_menu", 
+	"top_menu1", 
 	array(
 		"ALLOW_MULTI_SELECT" => "N",
 		"CHILD_MENU_TYPE" => "left",
-		"COMPONENT_TEMPLATE" => "top_menu",
+		"COMPONENT_TEMPLATE" => "top_menu1",
 		"DELAY" => "N",
 		"MAX_LEVEL" => "3",
 		"MENU_CACHE_GET_VARS" => array(
@@ -55,7 +54,7 @@ IncludeTemplateLangFile(__FILE__);
 		"MENU_CACHE_TYPE" => "A",
 		"MENU_CACHE_USE_GROUPS" => "Y",
 		"ROOT_MENU_TYPE" => "top",
-		"USE_EXT" => "N"
+		"USE_EXT" => "Y"
 	),
 	false
 );?>

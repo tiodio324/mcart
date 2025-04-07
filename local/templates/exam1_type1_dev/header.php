@@ -17,14 +17,13 @@ if ($page !== "/s2/") {
 							<p></p>
 						<?endif;
 				?>
-				<nav class="breadcrumbs">
-					<ol>
-						<li><a href="#">Главная</a></li>
-						<li><a href="#">Раздел 1</a></li>
-						<li><a href="#">Раздел 1.1</a></li>
-						<li class="current">Заголовок страницы</li>
-					</ol>
-				</nav>
+				<?$APPLICATION->IncludeComponent("bitrix:breadcrumb", "myBreadcrumb_dev", Array(
+	"PATH" => "",	// Путь, для которого будет построена навигационная цепочка (по умолчанию, текущий путь)
+		"SITE_ID" => "s2",	// Cайт (устанавливается в случае многосайтовой версии, когда DOCUMENT_ROOT у сайтов разный)
+		"START_FROM" => "0",	// Номер пункта, начиная с которого будет построена навигационная цепочка
+	),
+	false
+);?>
 			</div>
 		</div><!-- End Page Title -->
 	<?}?>

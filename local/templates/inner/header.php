@@ -4,7 +4,7 @@
 IncludeTemplateLangFile(__FILE__);
 ?>
 <!DOCTYPE html>
-<html lang=<?LANGUAGE_ID?>>
+<html lang=<?=LANGUAGE_ID?>>
 <head>
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <title><?$APPLICATION->ShowTitle();?></title>
