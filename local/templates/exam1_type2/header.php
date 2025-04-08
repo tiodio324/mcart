@@ -38,12 +38,15 @@ IncludeTemplateLangFile(__FILE__);
     </div><!-- End Logo -->
 
     <nav class="header-nav ms-auto">
-    <?$APPLICATION->IncludeComponent("bitrix:system.auth.form", "auth1", Array(
-	"FORGOT_PASSWORD_URL" => "",	// Страница забытого пароля
-		"PROFILE_URL" => "/s2/statistic_na/profile/",	// Страница профиля
-		"REGISTER_URL" => "",	// Страница регистрации
-		"SHOW_ERRORS" => "N",	// Показывать ошибки
-		"COMPONENT_TEMPLATE" => "auth"
+    <?$APPLICATION->IncludeComponent(
+	"bitrix:system.auth.form", 
+	"auth1", 
+	array(
+		"FORGOT_PASSWORD_URL" => "/s2/statistic_na/",
+		"PROFILE_URL" => "/s2/statistic_na/profile/",
+		"REGISTER_URL" => "",
+		"SHOW_ERRORS" => "N",
+		"COMPONENT_TEMPLATE" => "auth1"
 	),
 	false
 );?>
@@ -54,18 +57,22 @@ IncludeTemplateLangFile(__FILE__);
   <!-- ======= Sidebar ======= -->
   <aside id="sidebar" class="sidebar">
 
-  <?$APPLICATION->IncludeComponent("bitrix:menu", "dashboard_menu1", Array(
-	"ALLOW_MULTI_SELECT" => "Y",	// Разрешить несколько активных пунктов одновременно
-		"CHILD_MENU_TYPE" => "st_second",	// Тип меню для остальных уровней
-		"COMPONENT_TEMPLATE" => "dashboard_menu",
-		"DELAY" => "N",	// Откладывать выполнение шаблона меню
-		"MAX_LEVEL" => "2",	// Уровень вложенности меню
-		"MENU_CACHE_GET_VARS" => "",	// Значимые переменные запроса
-		"MENU_CACHE_TIME" => "3600",	// Время кеширования (сек.)
-		"MENU_CACHE_TYPE" => "A",	// Тип кеширования
-		"MENU_CACHE_USE_GROUPS" => "Y",	// Учитывать права доступа
-		"ROOT_MENU_TYPE" => "st_first",	// Тип меню для первого уровня
-		"USE_EXT" => "N",	// Подключать файлы с именами вида .тип_меню.menu_ext.php
+  <?$APPLICATION->IncludeComponent(
+	"bitrix:menu", 
+	"dashboard_menu1", 
+	array(
+		"ALLOW_MULTI_SELECT" => "Y",
+		"CHILD_MENU_TYPE" => "st_second",
+		"COMPONENT_TEMPLATE" => "dashboard_menu1",
+		"DELAY" => "N",
+		"MAX_LEVEL" => "2",
+		"MENU_CACHE_GET_VARS" => array(
+		),
+		"MENU_CACHE_TIME" => "3600",
+		"MENU_CACHE_TYPE" => "A",
+		"MENU_CACHE_USE_GROUPS" => "Y",
+		"ROOT_MENU_TYPE" => "st_first",
+		"USE_EXT" => "N"
 	),
 	false
 );?>

@@ -12,14 +12,14 @@ $aMenuLinks = Array(
 		"/s2/statistic_na/main/", 
 		Array(), 
 		Array("menu_ico"=>"menu-button-wide"), 
-		"" 
+		"CSite::InGroup(array(1,10))" 
 	),
 	Array(
 		"Дополнительные", 
 		"/s2/statistic_na/extra/", 
 		Array(), 
 		Array("menu_ico"=>"files"), 
-		"" 
+		"CSite::InGroup(array(1,10))" 
 	),
 	Array(
 		"Профиль", 
